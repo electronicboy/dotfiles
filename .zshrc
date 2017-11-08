@@ -12,7 +12,7 @@ SAVEHIST=1000
 unsetopt beep nomatch
 #bindkey -v
 # End of lines configured by zsh-newuser-install
-alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
+export PATH="$PATH:$HOME/bin"
 
 # just bundle antigen with the .dotfiles, saves our asses anyways...
 [ -f ~/bin/antigen.zsh ] && source ~/bin/antigen.zsh
