@@ -12,7 +12,7 @@ SAVEHIST=1000
 unsetopt beep nomatch
 #bindkey -v
 # End of lines configured by zsh-newuser-install
-export PATH="$PATH:$HOME/bin"
+export PATH="$PATH:$HOME/bin:/usr/bin:/usr/sbin:/usr/local/sbin"
 
 # just bundle antigen with the .dotfiles, saves our asses anyways...
 [ -f ~/bin/antigen.zsh ] && source ~/bin/antigen.zsh
@@ -47,3 +47,4 @@ antigen theme https://github.com/caiogondim/bullet-train-oh-my-zsh-theme bullet-
 antigen apply
 
 export EDITOR="vim"
+alias acraft='. /Users/shane/work/Paper/AlphheimCraft/acraft'
