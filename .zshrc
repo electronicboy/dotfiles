@@ -12,7 +12,7 @@ SAVEHIST=1000
 unsetopt beep nomatch
 #bindkey -v
 # End of lines configured by zsh-newuser-install
-export PATH="$PATH:$HOME/bin:/usr/bin:/usr/sbin:/usr/local/sbin"
+export PATH="$PATH:$HOME/bin:/usr/bin:/usr/sbin:/usr/local/sbin:/usr/local/opt/coreutils/libexec/gnubin"
 
 # just bundle antigen with the .dotfiles, saves our asses anyways...
 [ -f ~/bin/antigen.zsh ] && source ~/bin/antigen.zsh
@@ -37,6 +37,8 @@ fi
 
 # I install this on the same place on every machine...
 alias paper='. $HOME/work/Paper/Paper/paper'
+# paper test server, because apparently IJ likes to index the full directory tree...
+export PAPER_TEST_DIR='/Users/shane/work/Paper/TestServer'
 # Update this at some point...
 [ -d /Library/Java/JavaVirtualMachines/jdk1.8.0_141.jdk ] && export JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk1.8.0_141.jdk/Contents/Home"
 
