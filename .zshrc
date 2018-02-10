@@ -42,6 +42,13 @@ export PAPER_TEST_DIR='/Users/shane/work/Paper/TestServer'
 # Update this at some point...
 [ -d /Library/Java/JavaVirtualMachines/jdk1.8.0_141.jdk ] && export JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk1.8.0_141.jdk/Contents/Home"
 
+BULLETTRAIN_PROMPT_ORDER=(
+time
+context
+dir
+git
+)
+
 antigen use oh-my-zsh
 antigen bundle git
 antigen bundle command-not-found
