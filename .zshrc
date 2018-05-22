@@ -40,7 +40,7 @@ alias paper='. $HOME/work/Paper/Paper/paper'
 # paper test server, because apparently IJ likes to index the full directory tree...
 export PAPER_TEST_DIR='/Users/shane/work/Paper/TestServer'
 # Update this at some point...
-[ -d /Library/Java/JavaVirtualMachines/jdk1.8.0_141.jdk ] && export JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk1.8.0_141.jdk/Contents/Home"
+[ -d /Library/Java/JavaVirtualMachines/jdk1.8.0_172.jdk ] && export JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk1.8.0_172.jdk/Contents/Home"
 
 BULLETTRAIN_PROMPT_ORDER=(
 time
@@ -57,3 +57,5 @@ antigen apply
 
 export EDITOR="vim"
 alias acraft='. /Users/shane/work/Paper/AlphheimCraft/acraft'
+
+eval $(thefuck --alias)
