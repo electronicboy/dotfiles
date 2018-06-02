@@ -57,5 +57,3 @@ antigen apply
 
 export EDITOR="vim"
 alias acraft='. /Users/shane/work/Paper/AlphheimCraft/acraft'
-
-eval $(thefuck --alias)
