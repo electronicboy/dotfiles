@@ -1,7 +1,6 @@
 #the following lines were added by compinstall
 zstyle ':completion:*' completer _complete _ignored _approximate
 zstyle :compinstall filename '/home/shane/.zshrc'
-
 autoload -Uz compinit
 compinit
 # End of lines added by compinstall
@@ -10,10 +9,10 @@ HISTFILE=~/.zsh_history
 HISTSIZE=1000
 SAVEHIST=1000
 unsetopt beep nomatch
+# fix some support for shell scripts that rely on this behavior
 #bindkey -v
 # End of lines configured by zsh-newuser-install
 export PATH="$PATH:$HOME/bin:/usr/bin:/usr/sbin:/usr/local/sbin:/usr/local/opt/coreutils/libexec/gnubin:$HOME/go/bin:/snap/bin"
-
 # just bundle antigen with the .dotfiles, saves our asses anyways...
 [ -f ~/bin/antigen.zsh ] && source ~/bin/antigen.zsh
 
@@ -57,3 +56,5 @@ antigen apply
 
 export EDITOR="vim"
 alias acraft='. /Users/shane/work/Paper/AlphheimCraft/acraft'
+setopt shwordsplit
+alias gds='git diff --staged'
