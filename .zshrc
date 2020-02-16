@@ -1,3 +1,13 @@
+#zmodload zsh/datetime
+#setopt PROMPT_SUBST
+#PS4='+$EPOCHREALTIME %N:%i> '
+
+#logfile=$(mktemp zsh_profile.XXXXXXXX)
+#echo "Logging to $logfile"
+#exec 3>&2 2>$logfile
+
+#setopt XTRACE
+
 #the following lines were added by compinstall
 zstyle ':completion:*' completer _complete _ignored _approximate
 zstyle :compinstall filename '/home/shane/.zshrc'
@@ -50,11 +60,15 @@ git
 
 antigen use oh-my-zsh
 antigen bundle git
-antigen bundle command-not-found
+#antigen bundle command-not-found
 antigen theme https://github.com/caiogondim/bullet-train-oh-my-zsh-theme bullet-train
 antigen apply
 
 export EDITOR="vim"
-alias acraft='. /Users/shane/work/Paper/AlphheimCraft/acraft'
+#alias acraft='. /Users/shane/work/Paper/AlphheimCraft/acraft'
+alias vcraft='. /Users/shane/work/Paper/VCraft/vcraft'
 setopt shwordsplit
 alias gds='git diff --staged'
+
+#unsetopt XTRACE
+#exec 2>&3 3>&-
