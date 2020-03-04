@@ -37,6 +37,7 @@ export PAPER_TEST_BASE_JVM_ARGS="-server -Xmx${PAPER_TEST_MEMORY:-2G} -Xms${PAPE
 -Dfile.encoding=UTF-8 -XX:MaxGCPauseMillis=50 -XX:+UseG1GC -XX:+UnlockExperimentalVMOptions \
 -XX:G1NewSizePercent=30 -XX:G1MaxNewSizePercent=70 \
 -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5100"
+export PAPER_TEST_APP_ARGS="--nogui"
 
 #macOS specific...
 if [ -f /Applications/YourKit-Java-Profiler-2017.02.app/Contents/Resources/bin/mac/libyjpagent.jnilib ]
