@@ -22,7 +22,7 @@ unsetopt beep nomatch
 # fix some support for shell scripts that rely on this behavior
 #bindkey -v
 # End of lines configured by zsh-newuser-install
-export PATH="$PATH:$HOME/bin:/usr/bin:/usr/sbin:/usr/local/sbin:/usr/local/opt/coreutils/libexec/gnubin:$HOME/go/bin:/snap/bin"
+export PATH="/usr/local/opt/ruby/bin:$PATH:$HOME/bin:/usr/bin:/usr/sbin:/usr/local/sbin:/usr/local/opt/coreutils/libexec/gnubin:$HOME/go/bin:/snap/bin:/Users/shane/Library/Python/2.7/bin"
 # just bundle antigen with the .dotfiles, saves our asses anyways...
 [ -f ~/bin/antigen.zsh ] && source ~/bin/antigen.zsh
 
@@ -38,6 +38,8 @@ export PAPER_TEST_BASE_JVM_ARGS="-server -Xmx${PAPER_TEST_MEMORY:-2G} -Xms${PAPE
 -XX:G1NewSizePercent=30 -XX:G1MaxNewSizePercent=70 \
 -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5100"
 export PAPER_TEST_APP_ARGS="--nogui"
+
+alias ykmac=export PAPER_TEST_BASE_JVM_ARGS="-agentpath:/Applications/YourKit-Java-Profiler-2019.8.app/Contents/Resources/bin/mac/libyjpagent.dylib=disablestacktelemetry,exceptions=disable,delay=10000 $PAPER_TEST_BASE_JVM_ARGS"
 
 #macOS specific...
 if [ -f /Applications/YourKit-Java-Profiler-2017.02.app/Contents/Resources/bin/mac/libyjpagent.jnilib ]
@@ -74,3 +76,4 @@ alias gds='git diff --staged'
 
 #unsetopt XTRACE
 #exec 2>&3 3>&-
+export PATH="/usr/local/opt/qt/bin:$PATH"
