@@ -76,4 +76,9 @@ alias gds='git diff --staged'
 
 #unsetopt XTRACE
 #exec 2>&3 3>&-
-export PATH="/usr/local/opt/qt/bin:$PATH"
+export PATH="$(brew --prefix)/opt/findutils/libexec/gnubin:/usr/local/opt/qt/bin:$PATH"
+
+# Created by `pipx` on 2021-06-29 19:59:24
+export PATH="$PATH:/Users/shane/.local/bin"
+export GPG_TTY=$(tty)
+
