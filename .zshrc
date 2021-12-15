@@ -64,6 +64,7 @@ git
 
 antigen use oh-my-zsh
 antigen bundle git
+antigen bundle mvn
 #antigen bundle command-not-found
 antigen theme https://github.com/caiogondim/bullet-train-oh-my-zsh-theme bullet-train
 antigen apply
@@ -76,7 +77,7 @@ alias gds='git diff --staged'
 
 #unsetopt XTRACE
 #exec 2>&3 3>&-
-export PATH="$(brew --prefix)/opt/findutils/libexec/gnubin:/usr/local/opt/qt/bin:$PATH"
+export PATH="/usr/local/opt/findutils/libexec/gnubin:/usr/local/opt/qt/bin:$PATH"
 
 # Created by `pipx` on 2021-06-29 19:59:24
 export PATH="$PATH:/Users/shane/.local/bin"
