@@ -22,9 +22,9 @@ unsetopt beep nomatch
 # fix some support for shell scripts that rely on this behavior
 #bindkey -v
 # End of lines configured by zsh-newuser-install
-export PATH="/usr/local/opt/ruby/bin:$PATH:$HOME/bin:/usr/bin:/usr/sbin:/usr/local/sbin:/usr/local/opt/coreutils/libexec/gnubin:$HOME/go/bin:/snap/bin:/Users/shane/Library/Python/2.7/bin"
+export PATH="/usr/local/opt/ruby/bin:$PATH:$HOME/.bin:/usr/bin:/usr/sbin:/usr/local/sbin:/usr/local/opt/coreutils/libexec/gnubin:$HOME/go/bin:/snap/bin:/Users/shane/Library/Python/2.7/bin"
 # just bundle antigen with the .dotfiles, saves our asses anyways...
-[ -f ~/bin/antigen.zsh ] && source ~/bin/antigen.zsh
+[ -f ~/.bin/antigen.zsh ] && source ~/.bin/antigen.zsh
 
 # apparently this isn't set when on SSH...
 # (breaks ssh and the omzsh git integration)
@@ -83,3 +83,12 @@ export PATH="/usr/local/opt/findutils/libexec/gnubin:/usr/local/opt/qt/bin:$PATH
 export PATH="$PATH:/Users/shane/.local/bin"
 export GPG_TTY=$(tty)
 
+
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="$HOME/.sdkman"
+[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
