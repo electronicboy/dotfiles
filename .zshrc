@@ -29,26 +29,16 @@ unsetopt beep nomatch
 #bindkey -v
 # End of lines configured by zsh-newuser-install
 
-export PATH="/usr/local/opt/ruby/bin:$PATH:$HOME/bin:/usr/bin:/usr/sbin:/usr/local/sbin:/usr/local/opt/coreutils/libexec/gnubin:$HOME/go/bin:/snap/bin:/Users/shane/Library/Python/2.7/bin"
+export PATH="/usr/local/opt/ruby/bin:$PATH:$HOME/.bin:/usr/bin:/usr/sbin:/usr/local/sbin:/usr/local/opt/coreutils/libexec/gnubin:$HOME/go/bin:/snap/bin:/Users/shane/Library/Python/2.7/bin"
 
 export PATH="/usr/local/opt/findutils/libexec/gnubin:/usr/local/opt/qt/bin:$PATH"
 
 # just bundle antigen with the .dotfiles, saves our asses anyways...
-[ -f ~/bin/antigen.zsh ] && source ~/bin/antigen.zsh
-test -e /Library/Java/JavaVirtualMachines/temurin-17.jdk && export JAVA_HOME=/Library/Java/JavaVirtualMachines/temurin-17.jdk/Contents/Home
+[ -f ~/.bin/antigen.zsh ] && source ~/.bin/antigen.zsh
 
 # apparently this isn't set when on SSH...
 # (breaks ssh and the omzsh git integration)
 export LC_ALL=en_US.UTF-8
-
-#PAPER
-export PAPER_TEST_MEMORY=2G
-
-export PAPER_TEST_BASE_JVM_ARGS="-server -Xmx${PAPER_TEST_MEMORY:-2G} -Xms${PAPER_TEST_MEMORY:-2G} \
--Dfile.encoding=UTF-8 -XX:MaxGCPauseMillis=50 -XX:+UseG1GC -XX:+UnlockExperimentalVMOptions \
--XX:G1NewSizePercent=30 -XX:G1MaxNewSizePercent=70 \
--agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5100"
-export PAPER_TEST_APP_ARGS="--nogui"
 
 BULLETTRAIN_PROMPT_ORDER=(
 time
@@ -96,3 +86,11 @@ export PATH="/Users/shane/graalvm-ce-java17-22.3.1/Contents/Home/bin:$PATH"
 export JAVA_HOME="/Users/shane/graalvm-ce-java17-22.3.1/Contents/Home"
 }
 zprof
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="$HOME/.sdkman"
+[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
