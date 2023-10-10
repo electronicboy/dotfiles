@@ -1,3 +1,4 @@
+zmodload zsh/zprof
 #zmodload zsh/datetime
 #setopt PROMPT_SUBST
 #PS4='+$EPOCHREALTIME %N:%i> '
@@ -12,7 +13,12 @@
 zstyle ':completion:*' completer _complete _ignored _approximate
 zstyle :compinstall filename '/home/shane/.zshrc'
 autoload -Uz compinit
-compinit
+if [[ -n ${ZDOTDIR}/.zcompdump(#qN.mh+24) ]]; then
+	compinit;
+else
+	compinit -C;
+fi;
+
 # End of lines added by compinstall
 # Lines configured by zsh-newuser-install
 HISTFILE=~/.zsh_history
@@ -22,9 +28,14 @@ unsetopt beep nomatch
 # fix some support for shell scripts that rely on this behavior
 #bindkey -v
 # End of lines configured by zsh-newuser-install
+
 export PATH="/usr/local/opt/ruby/bin:$PATH:$HOME/bin:/usr/bin:/usr/sbin:/usr/local/sbin:/usr/local/opt/coreutils/libexec/gnubin:$HOME/go/bin:/snap/bin:/Users/shane/Library/Python/2.7/bin"
+
+export PATH="/usr/local/opt/findutils/libexec/gnubin:/usr/local/opt/qt/bin:$PATH"
+
 # just bundle antigen with the .dotfiles, saves our asses anyways...
 [ -f ~/bin/antigen.zsh ] && source ~/bin/antigen.zsh
+test -e /Library/Java/JavaVirtualMachines/temurin-17.jdk && export JAVA_HOME=/Library/Java/JavaVirtualMachines/temurin-17.jdk/Contents/Home
 
 # apparently this isn't set when on SSH...
 # (breaks ssh and the omzsh git integration)
@@ -39,22 +50,6 @@ export PAPER_TEST_BASE_JVM_ARGS="-server -Xmx${PAPER_TEST_MEMORY:-2G} -Xms${PAPE
 -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5100"
 export PAPER_TEST_APP_ARGS="--nogui"
 
-alias ykmac=export PAPER_TEST_BASE_JVM_ARGS="-agentpath:/Applications/YourKit-Java-Profiler-2019.8.app/Contents/Resources/bin/mac/libyjpagent.dylib=disablestacktelemetry,exceptions=disable,delay=10000 $PAPER_TEST_BASE_JVM_ARGS"
-
-#macOS specific...
-if [ -f /Applications/YourKit-Java-Profiler-2017.02.app/Contents/Resources/bin/mac/libyjpagent.jnilib ]
-then
-	export PAPER_TEST_BASE_JVM_ARGS="-agentpath:/Applications/YourKit-Java-Profiler-2017.02.app/Contents/Resources/bin/mac/libyjpagent.jnilib "$PAPER_TEST_BASE_JVM_ARGS
-fi
-
-# I install this on the same place on every machine...
-alias paper='. $HOME/work/Paper/Paper/paper'
-# paper test server, because apparently IJ likes to index the full directory tree...
-export PAPER_TEST_DIR='/Users/shane/work/Paper/TestServer'
-# Update this at some point...
-#[ -d /Library/Java/JavaVirtualMachines/jdk1.8.0_172.jdk ] && export JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk1.8.0_172.jdk/Contents/Home"
-#[ -d /Library/Java/JavaVirtualMachines/jdk1.8.0_231.jdk ] && export JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk1.8.0_231.jdk/Contents/Home"
-
 BULLETTRAIN_PROMPT_ORDER=(
 time
 context
@@ -64,22 +59,40 @@ git
 
 antigen use oh-my-zsh
 antigen bundle git
-antigen bundle mvn
+#antigen bundle mvn
 #antigen bundle command-not-found
 antigen theme https://github.com/caiogondim/bullet-train-oh-my-zsh-theme bullet-train
 antigen apply
 
 export EDITOR="vim"
-#alias acraft='. /Users/shane/work/Paper/AlphheimCraft/acraft'
-alias vcraft='. /Users/shane/work/Paper/VCraft/vcraft'
 setopt shwordsplit
+
 alias gds='git diff --staged'
 
 #unsetopt XTRACE
 #exec 2>&3 3>&-
-export PATH="/usr/local/opt/findutils/libexec/gnubin:/usr/local/opt/qt/bin:$PATH"
 
 # Created by `pipx` on 2021-06-29 19:59:24
 export PATH="$PATH:/Users/shane/.local/bin"
 export GPG_TTY=$(tty)
 
+
+#export NVM_DIR="$HOME/.nvm"
+#[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+#[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+if [[ $TERM_PROGRAM != "WarpTerminal" ]]; then
+##### WHAT YOU WANT TO DISABLE FOR WARP - BELOW
+
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+
+##### WHAT YOU WANT TO DISABLE FOR WARP - ABOVE
+fi
+
+alias work="cd /Volumes/shanework/work"
+
+graal() {
+export PATH="/Users/shane/graalvm-ce-java17-22.3.1/Contents/Home/bin:$PATH"
+export JAVA_HOME="/Users/shane/graalvm-ce-java17-22.3.1/Contents/Home"
+}
+zprof
