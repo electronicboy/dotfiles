@@ -85,7 +85,6 @@ graal() {
 export PATH="/Users/shane/graalvm-ce-java17-22.3.1/Contents/Home/bin:$PATH"
 export JAVA_HOME="/Users/shane/graalvm-ce-java17-22.3.1/Contents/Home"
 }
-zprof
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="$HOME/.sdkman"
