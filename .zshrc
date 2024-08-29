@@ -59,6 +59,20 @@ setopt shwordsplit
 
 alias gds='git diff --staged'
 
+if command -v eza > /dev/null; then
+  alias ls='eza'
+  alias l='eza -lbF --git'
+  alias ll='eza -lbGF --git'
+  alias llm='eza -lbGd --git --sort=modified'
+  alias la='eza -lbhHigUmuSa --time-style=long-iso --git --color-scale'
+  alias lx='eza -lbhHigUmuSa@ --time-style=long-iso --git --color-scale'
+
+  # specialty views
+  alias lS='eza -1'
+  alias lt='eza --tree --level=2'
+  alias l.="eza -a | grep -E '^\.'"
+fi
+
 #unsetopt XTRACE
 #exec 2>&3 3>&-
 
@@ -86,6 +100,10 @@ export PATH="/Users/shane/graalvm-ce-java17-22.3.1/Contents/Home/bin:$PATH"
 export JAVA_HOME="/Users/shane/graalvm-ce-java17-22.3.1/Contents/Home"
 }
 
+java21() {
+sdk use java 21.0.2-amzn
+}
+
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
@@ -93,3 +111,11 @@ export SDKMAN_DIR="$HOME/.sdkman"
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# bun completions
+[ -s "/Users/shane/.bun/_bun" ] && source "/Users/shane/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+[[ $commands[kubectl] ]] && source <(kubectl completion zsh)
