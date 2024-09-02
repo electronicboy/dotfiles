@@ -104,6 +104,14 @@ java21() {
 sdk use java 21.0.2-amzn
 }
 
+touchweb() {
+touch index.html style.css app.js
+}
+
+npmi() {
+npm i
+}
+
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
