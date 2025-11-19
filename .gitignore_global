@@ -11,7 +11,10 @@
 .idea/dictionaries
 .idea/vcs.xml
 .idea/jsLibraryMappings.xml
-.idea
+.idea/checkstyle-idea.xml
+.idea/git_toolbox_blame.xml
+.idea/csv-editor.xml
+.idea/git_toolbox_prj.xml
 
 # Sensitive or high-churn files:
 .idea/dataSources.ids
@@ -95,4 +98,8 @@ Icon
 Network Trash Folder
 Temporary Items
 .apdisk
-target
+.idea/copilot.data.migration.agent.xml
+.idea/copilot.data.migration.ask.xml
+.idea/copilot.data.migration.ask2agent.xml
+.idea/copilot.data.migration.edit.xml
+.idea/data_source_mapping.xml

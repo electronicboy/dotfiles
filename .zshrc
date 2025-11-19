@@ -1,3 +1,5 @@
+# Add deno completions to search path
+if [[ ":$FPATH:" != *":/Users/shane/.zsh/completions:"* ]]; then export FPATH="/Users/shane/.zsh/completions:$FPATH"; fi
 zmodload zsh/zprof
 #zmodload zsh/datetime
 #setopt PROMPT_SUBST
@@ -51,7 +53,8 @@ antigen use oh-my-zsh
 antigen bundle git
 #antigen bundle mvn
 #antigen bundle command-not-found
-antigen theme https://github.com/caiogondim/bullet-train-oh-my-zsh-theme bullet-train
+#antigen theme https://github.com/caiogondim/bullet-train-oh-my-zsh-theme bullet-train
+#antigen theme https://github.com/agnoster/agnoster-zsh-theme agnoster
 antigen apply
 
 export EDITOR="vim"
@@ -101,7 +104,7 @@ export JAVA_HOME="/Users/shane/graalvm-ce-java17-22.3.1/Contents/Home"
 }
 
 java21() {
-sdk use java 21.0.2-amzn
+sdk use java 21.0.5-jbr
 }
 
 touchweb() {
@@ -126,4 +129,22 @@ export NVM_DIR="$HOME/.nvm"
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
+PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 [[ $commands[kubectl] ]] && source <(kubectl completion zsh)
+
+eval $(thefuck --alias)
+export PATH="/opt/homebrew/opt/postgresql@16/bin:$PATH"
+. "/Users/shane/.deno/env"
+# The following lines have been added by Docker Desktop to enable Docker CLI completions.
+fpath=(/Users/shane/.docker/completions $fpath)
+autoload -Uz compinit
+compinit
+# End of Docker CLI completions
+
+PATH="/Users/shane/perl5/bin${PATH:+:${PATH}}"; export PATH;
+PERL5LIB="/Users/shane/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
+PERL_LOCAL_LIB_ROOT="/Users/shane/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
+PERL_MB_OPT="--install_base \"/Users/shane/perl5\""; export PERL_MB_OPT;
+PERL_MM_OPT="INSTALL_BASE=/Users/shane/perl5"; export PERL_MM_OPT;
+
+eval "$(starship init zsh)"
