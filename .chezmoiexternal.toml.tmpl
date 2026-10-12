@@ -39,3 +39,15 @@
     type = "file"
     url = "https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/plugins/git/git.plugin.zsh"
     refreshPeriod = "168h"
+
+# Nerd Font (JetBrains Mono): "NF" for terminals/prompt icons, "NFM" for strict monospace.
+{{- if eq .chezmoi.os "darwin" }}
+["Library/Fonts/JetBrainsMonoNerdFont"]
+{{- else }}
+[".local/share/fonts/JetBrainsMonoNerdFont"]
+{{- end }}
+    type = "archive"
+    url = "https://github.com/ryanoasis/nerd-fonts/releases/latest/download/JetBrainsMono.tar.xz"
+    exact = true
+    include = ["JetBrainsMonoNerdFont-*.ttf", "JetBrainsMonoNerdFontMono-*.ttf"]
+    refreshPeriod = "720h"

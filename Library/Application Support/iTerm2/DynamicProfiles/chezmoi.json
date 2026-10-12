@@ -1,0 +1,19 @@
+{
+  "Profiles": [
+    {
+      "Name": "Shane",
+      "Guid": "A7702867-6AD8-4667-937C-CDB5AF123E3D",
+      "Normal Font": "JetBrainsMonoNF-Regular 13",
+      "Non Ascii Font": "JetBrainsMonoNF-Regular 13",
+      "Use Non-ASCII Font": false,
+      "ASCII Ligatures": true,
+      "Use Bold Font": true,
+      "Use Italic Font": true,
+      "Unlimited Scrollback": true,
+      "Silence Bell": true,
+      "Columns": 120,
+      "Rows": 40,
+      "Custom Directory": "Recycle"
+    }
+  ]
+}

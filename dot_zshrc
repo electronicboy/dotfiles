@@ -74,6 +74,7 @@ _load "$ZPLUGINS/zsh-autosuggestions/zsh-autosuggestions.zsh"
 alias gds='git diff --staged'
 
 if (( $+commands[eza] )); then
+  export EZA_ICONS_AUTO=1   # icons when stdout is a terminal (Nerd Font)
   alias ls='eza'
   alias l='eza -lbF --git'
   alias ll='eza -lbGF --git'

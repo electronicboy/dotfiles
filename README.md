@@ -14,17 +14,19 @@ That asks for your git name/email once, then:
 2. installs **mise**
 3. writes the dotfiles and fetches zsh plugins
 4. installs system packages and every tool in `~/.config/mise/config.toml`
-5. applies a few macOS defaults
+5. applies a few macOS defaults, installs the Nerd Font and the iTerm2 profile
 
 ## Layout
 
 | Path | What |
 |---|---|
-| `dot_zshenv`, `dot_zprofile.tmpl`, `dot_zshrc` | zsh. No plugin manager; plugins come from `.chezmoiexternal.toml` |
+| `dot_zshenv`, `dot_zprofile.tmpl`, `dot_zshrc` | zsh. No plugin manager; plugins come from `.chezmoiexternal.toml.tmpl` |
 | `dot_config/mise/config.toml.tmpl` | languages + CLI tools (JDKs, node, go, rg, fd, kubectl...) |
 | `.chezmoidata/packages.yaml` | the few things mise can't provide per platform |
 | `dot_config/git/` | git config (SSH commit signing if `~/.ssh/id_ed25519.pub` exists) + global ignore |
-| `dot_config/starship.toml` | prompt |
+| `dot_config/starship.toml` | prompt (Nerd Font icons) |
+| `.chezmoiexternal.toml.tmpl` | zsh plugins + JetBrains Mono Nerd Font (into `~/Library/Fonts`) |
+| `Library/Application Support/iTerm2/DynamicProfiles/` | iTerm2 profile "Shane" using the Nerd Font, set as default |
 | `dot_local/bin/` | personal scripts (`apatch`, ...) |
 | `.chezmoiscripts/` | bootstrap / package install / macOS defaults |
 

@@ -1,0 +1,12 @@
+#!/bin/bash
+# Font cache / default terminal profile. Re-runs if the iTerm profile changes:
+# {{ include "Library/Application Support/iTerm2/DynamicProfiles/chezmoi.json" | sha256sum }}
+set -euo pipefail
+{{ if eq .chezmoi.os "darwin" -}}
+# Make the chezmoi-managed iTerm2 profile the default (iTerm2 must be installed;
+# quit it first or it may overwrite this on exit).
+defaults write com.googlecode.iterm2 "Default Bookmark Guid" -string "A7702867-6AD8-4667-937C-CDB5AF123E3D"
+# Terminal.app / other apps: just pick "JetBrainsMono Nerd Font" in their settings.
+{{- else -}}
+command -v fc-cache >/dev/null && fc-cache -f "$HOME/.local/share/fonts" || true
+{{- end }}

@@ -1,5 +1,6 @@
 # Same order as the old bullet-train prompt (time, context, dir, git),
 # plus the things that matter day to day: JVM version and kube context.
+# Icons need a Nerd Font (installed by chezmoi, see .chezmoiexternal.toml.tmpl).
 "$schema" = "https://starship.rs/config-schema.json"
 
 format = """
@@ -26,15 +27,21 @@ truncation_length = 4
 truncate_to_repo = true
 
 [java]
-format = "[☕ $version]($style) "
+symbol = " "
+format = "[$symbol$version]($style) "
 
 [nodejs]
-format = "[⬢ $version]($style) "
+symbol = " "
+format = "[$symbol$version]($style) "
 
 # Always show the active cluster: cheap insurance before `kubectl apply`.
 [kubernetes]
 disabled = false
-format = "[⎈ $context(/$namespace)]($style) "
+symbol = "󱃾 "
+format = "[$symbol$context(/$namespace)]($style) "
 
 [cmd_duration]
 min_time = 2000
+
+[git_branch]
+symbol = " "
