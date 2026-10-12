@@ -1,0 +1,55 @@
+[user]
+	name = {{ .name }}
+	email = {{ .email }}
+{{- $sshKey := joinPath .chezmoi.homeDir ".ssh/id_ed25519.pub" }}
+{{- if stat $sshKey }}
+	signingkey = {{ $sshKey }}
+
+# Sign commits/tags with the same SSH key used for GitHub
+# (add it on GitHub as a *signing* key too).
+[gpg]
+	format = ssh
+[commit]
+	gpgsign = true
+[tag]
+	gpgsign = true
+{{- end }}
+
+[init]
+	defaultBranch = main
+[core]
+	# delta when installed, plain less otherwise
+	pager = "command -v delta >/dev/null 2>&1 && exec delta || exec less -FRX"
+[delta]
+	navigate = true
+	line-numbers = true
+[interactive]
+	diffFilter = "command -v delta >/dev/null 2>&1 && exec delta --color-only || exec cat"
+
+[fetch]
+	prune = true
+[pull]
+	rebase = true
+[push]
+	autoSetupRemote = true
+[rebase]
+	autoStash = true
+	autoSquash = true
+	updateRefs = true
+[rerere]
+	# Remembers conflict resolutions; pays off when rebasing patch stacks repeatedly.
+	enabled = true
+	autoUpdate = true
+[merge]
+	conflictStyle = zdiff3
+[diff]
+	algorithm = histogram
+	colorMoved = default
+[branch]
+	sort = -committerdate
+[column]
+	ui = auto
+
+# Clone over HTTPS, push over SSH
+[url "git@github.com:"]
+	pushInsteadOf = https://github.com/

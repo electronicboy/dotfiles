@@ -1,0 +1,22 @@
+# System packages, for things mise can't provide as a prebuilt binary.
+# Most CLI tools live in dot_config/mise/config.toml.tmpl instead.
+packages:
+  # Intel Macs. These have no Intel macOS release binaries upstream
+  # (eza never had them; delta and atuin dropped them), plus native deps.
+  macports:
+    - eza
+    - git-delta
+    - atuin
+    - wiggle        # used by ~/.local/bin/apatch
+    - gnupg2
+    - pinentry-mac
+    - coreutils     # GNU tools, put first on PATH via gnubin
+    - findutils
+  # Apple Silicon Macs
+  homebrew:
+    - eza
+    - wiggle
+    - gnupg
+    - pinentry-mac
+    - coreutils
+    - findutils

@@ -1,0 +1,1 @@
+find packs -type d -d 1 -exec ./packager.sh -b {} \;

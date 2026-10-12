@@ -1,0 +1,102 @@
+# Interactive shells. Managed by chezmoi: edit with `chezmoi edit ~/.zshrc`.
+# Machine-specific or secret bits go in ~/.zshrc.local (not tracked).
+#
+# Profile startup:  ZPROF=1 zsh -i -c exit
+[[ -n "$ZPROF" ]] && zmodload zsh/zprof
+
+ZPLUGINS="$XDG_DATA_HOME/zsh/plugins"
+ZCACHE="$XDG_CACHE_HOME/zsh"
+mkdir -p "$ZCACHE/completions" "$XDG_STATE_HOME/zsh"
+
+# --- Options ---------------------------------------------------------------
+HISTFILE="$XDG_STATE_HOME/zsh/history"
+HISTSIZE=100000
+SAVEHIST=100000
+setopt extended_history hist_ignore_dups hist_ignore_space hist_reduce_blanks share_history
+setopt auto_cd auto_pushd pushd_ignore_dups interactive_comments extended_glob
+setopt shwordsplit          # kept from the old config: some scripts rely on it
+unsetopt beep nomatch
+
+export EDITOR="vim"
+export GPG_TTY=$TTY
+
+# --- Tools -----------------------------------------------------------------
+# mise first, so everything below sees mise-managed tools on PATH.
+if command -v mise >/dev/null; then
+  eval "$(mise activate zsh)"
+fi
+
+# Cache completion scripts for tools that generate them, instead of running
+# `foo completion zsh` on every shell start. `zsh-refresh-completions` rebuilds them.
+_cache_completion() {
+  local name=$1; shift
+  (( $+commands[$name] )) || return
+  local out="$ZCACHE/completions/_$name"
+  [[ -s $out ]] || "$@" >| "$out" 2>/dev/null
+}
+_cache_completion mise     mise completion zsh
+_cache_completion kubectl  kubectl completion zsh
+_cache_completion helm     helm completion zsh
+_cache_completion gh       gh completion -s zsh
+_cache_completion chezmoi  chezmoi completion zsh
+_cache_completion deno     deno completions zsh
+_cache_completion bun      bun completions
+zsh-refresh-completions() { rm -f "$ZCACHE"/completions/_* "$ZCACHE"/zcompdump*; exec zsh; }
+
+# --- Completion ------------------------------------------------------------
+fpath=("$ZCACHE/completions" "$ZPLUGINS/zsh-completions/src" $fpath)
+autoload -Uz compinit
+# Full check at most once a day; otherwise trust the dump.
+if [[ -n "$ZCACHE"/zcompdump(#qN.mh+24) || ! -s "$ZCACHE/zcompdump" ]]; then
+  compinit -d "$ZCACHE/zcompdump"
+else
+  compinit -C -d "$ZCACHE/zcompdump"
+fi
+zstyle ':completion:*' completer _complete _ignored _approximate
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
+zstyle ':completion:*' menu no                      # fzf-tab handles the menu
+zstyle ':completion:*:git-checkout:*' sort false
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath 2>/dev/null || ls $realpath'
+
+# --- Plugins (fetched by chezmoi, see .chezmoiexternal.toml) ---------------
+_load() { [[ -r "$1" ]] && source "$1"; }
+_load "$ZPLUGINS/fzf-tab/fzf-tab.plugin.zsh"
+_load "$ZPLUGINS/omz-git/git.zsh"
+_load "$ZPLUGINS/omz-git/git.plugin.zsh"
+_load "$ZPLUGINS/zsh-autosuggestions/zsh-autosuggestions.zsh"
+
+(( $+commands[fzf] ))      && source <(fzf --zsh)
+(( $+commands[zoxide] ))   && eval "$(zoxide init zsh)"          # `z foo`, `zi` for interactive
+(( $+commands[atuin] ))    && eval "$(atuin init zsh --disable-up-arrow)"  # Ctrl-R
+(( $+commands[starship] )) && eval "$(starship init zsh)"
+
+# --- Aliases & functions ---------------------------------------------------
+alias gds='git diff --staged'
+
+if (( $+commands[eza] )); then
+  alias ls='eza'
+  alias l='eza -lbF --git'
+  alias ll='eza -lbGF --git'
+  alias llm='eza -lbGd --git --sort=modified'
+  alias la='eza -lbhHigUmuSa --time-style=long-iso --git --color-scale'
+  alias lx='eza -lbhHigUmuSa@ --time-style=long-iso --git --color-scale'
+  alias lS='eza -1'
+  alias lt='eza --tree --level=2'
+  alias l.="eza -a | grep -E '^\.'"
+fi
+
+[[ -d /Volumes/shanework/work ]] && alias work="cd /Volumes/shanework/work"
+
+# Switch JDK for this shell only, e.g. `jdk temurin-21`, `jdk oracle-graalvm-25`
+jdk() { mise shell "java@${1:?usage: jdk <vendor-version>}"; }
+touchweb() { touch index.html style.css app.js; }
+alias npmi='npm i'
+
+# --- Local overrides -------------------------------------------------------
+[[ -f "$HOME/.zshrc.local" ]] && source "$HOME/.zshrc.local"
+
+# Syntax highlighting must be last.
+_load "$ZPLUGINS/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh"
+unfunction _load _cache_completion
+
+[[ -n "$ZPROF" ]] && zprof

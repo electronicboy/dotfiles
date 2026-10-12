@@ -1,0 +1,54 @@
+# Global tool versions. Projects override these with their own mise.toml
+# (or .sdkmanrc / .java-version / .nvmrc, enabled below).
+#
+#   mise use -g <tool>@<ver>   change a global version (then `chezmoi re-add` this file)
+#   mise up                    upgrade everything within the pinned ranges
+#   mise ls-remote java temurin-21
+
+[tools]
+# --- JVM -------------------------------------------------------------------
+# The first entry is the default; the second stays installed for `mise shell java@temurin-21`.
+java = ["temurin-25", "temurin-21"]
+gradle = "latest"
+maven = "latest"
+
+# --- Other languages -------------------------------------------------------
+node = "lts"
+go = "latest"
+bun = "latest"
+deno = "latest"
+uv = "latest"            # Python and Python tools (replaces pipx)
+
+# --- Shell / CLI -----------------------------------------------------------
+ripgrep = "latest"
+fd = "latest"
+bat = "latest"
+fzf = "latest"
+zoxide = "latest"
+starship = "latest"
+jq = "latest"
+yq = "latest"
+gh = "latest"
+lazygit = "latest"
+shellcheck = "latest"
+chezmoi = "latest"
+usage = "latest"         # mise's own shell completions
+{{- if not (and (eq .chezmoi.os "darwin") (eq .chezmoi.arch "amd64")) }}
+# No upstream Intel macOS builds for these; MacPorts provides them there.
+delta = "latest"
+atuin = "latest"
+{{- end }}
+{{- if eq .chezmoi.os "linux" }}
+eza = "latest"
+{{- end }}
+
+# --- Kubernetes ------------------------------------------------------------
+kubectl = "latest"
+helm = "latest"
+k9s = "latest"
+kubectx = "latest"
+krew = "latest"
+
+[settings]
+# Read version files that other tools/teammates already use.
+idiomatic_version_file_enable_tools = ["java", "node"]

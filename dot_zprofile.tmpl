@@ -1,0 +1,28 @@
+# Login shells (every new terminal tab on macOS). PATH goes here.
+typeset -U path PATH
+
+{{ if eq .pkgmgr "macports" -}}
+# MacPorts
+path=(/opt/local/bin /opt/local/sbin $path)
+export MANPATH="/opt/local/share/man:${MANPATH:-}"
+[[ -d /opt/local/libexec/gnubin ]] && path=(/opt/local/libexec/gnubin $path)
+{{- else if eq .pkgmgr "homebrew" -}}
+# Homebrew
+if [[ -x /opt/homebrew/bin/brew ]]; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+  for _gnu in coreutils findutils; do
+    [[ -d "$HOMEBREW_PREFIX/opt/$_gnu/libexec/gnubin" ]] && path=("$HOMEBREW_PREFIX/opt/$_gnu/libexec/gnubin" $path)
+  done
+  unset _gnu
+fi
+{{- end }}
+
+path=("$HOME/.local/bin" "${KREW_ROOT:-$HOME/.krew}/bin" $path)
+
+# mise shims, so IDEs, scripts and non-interactive shells see managed tools.
+# Interactive shells switch to full `mise activate` in .zshrc.
+if command -v mise >/dev/null; then
+  eval "$(mise activate zsh --shims)"
+fi
+
+[[ -f "$HOME/.zprofile.local" ]] && source "$HOME/.zprofile.local"

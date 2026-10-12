@@ -1,0 +1,52 @@
+#!/bin/bash
+# One-time machine bootstrap: Xcode CLT, the system package manager, and mise.
+set -euo pipefail
+
+log() { printf '\033[1;34m==>\033[0m %s\n' "$*"; }
+
+{{ if eq .chezmoi.os "darwin" -}}
+# --- Xcode Command Line Tools (MacPorts and Homebrew both need them) -------
+if ! xcode-select -p >/dev/null 2>&1; then
+  log "Installing Xcode Command Line Tools (accept the dialog)..."
+  xcode-select --install || true
+  until xcode-select -p >/dev/null 2>&1; do sleep 10; done
+fi
+{{- end }}
+
+{{ if eq .pkgmgr "macports" -}}
+# --- MacPorts (Intel) ------------------------------------------------------
+if [[ ! -x /opt/local/bin/port ]]; then
+  major=$(sw_vers -productVersion | cut -d. -f1)
+  case "$major" in
+    13) codename=Ventura ;;
+    14) codename=Sonoma ;;
+    15) codename=Sequoia ;;
+    26) codename=Tahoe ;;
+    *) echo "Unknown macOS $major: install MacPorts by hand from macports.org" >&2; exit 1 ;;
+  esac
+  # Latest release tag, e.g. v2.12.6
+  tag=$(curl -fsSI https://github.com/macports/macports-base/releases/latest \
+        | awk -F/ 'tolower($1) ~ /^location:/ {print $NF}' | tr -d '\r')
+  ver=${tag#v}
+  pkg="MacPorts-${ver}-${major}-${codename}.pkg"
+  log "Installing MacPorts ${ver} for macOS ${major} (${codename})..."
+  tmp=$(mktemp -d)
+  curl -fL --progress-bar -o "$tmp/$pkg" \
+    "https://github.com/macports/macports-base/releases/download/${tag}/${pkg}"
+  sudo installer -pkg "$tmp/$pkg" -target /
+  rm -rf "$tmp"
+fi
+export PATH="/opt/local/bin:/opt/local/sbin:$PATH"
+{{- else if eq .pkgmgr "homebrew" }}
+# --- Homebrew (Apple Silicon) ----------------------------------------------
+if [[ ! -x /opt/homebrew/bin/brew ]]; then
+  log "Installing Homebrew..."
+  NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+fi
+{{- end }}
+
+# --- mise --------------------------------------------------------------------
+if [[ ! -x "$HOME/.local/bin/mise" ]] && ! command -v mise >/dev/null; then
+  log "Installing mise..."
+  curl -fsSL https://mise.run | sh
+fi

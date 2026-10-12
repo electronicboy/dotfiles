@@ -1,0 +1,40 @@
+# Same order as the old bullet-train prompt (time, context, dir, git),
+# plus the things that matter day to day: JVM version and kube context.
+"$schema" = "https://starship.rs/config-schema.json"
+
+format = """
+$time$username$hostname$directory$git_branch$git_state$git_status\
+$java$nodejs$kubernetes$cmd_duration
+$character"""
+add_newline = false
+
+[time]
+disabled = false
+format = "[$time]($style) "
+time_format = "%H:%M"
+style = "dimmed white"
+
+[username]
+format = "[$user]($style)@"
+
+[hostname]
+ssh_only = true
+format = "[$hostname]($style) "
+
+[directory]
+truncation_length = 4
+truncate_to_repo = true
+
+[java]
+format = "[☕ $version]($style) "
+
+[nodejs]
+format = "[⬢ $version]($style) "
+
+# Always show the active cluster: cheap insurance before `kubectl apply`.
+[kubernetes]
+disabled = false
+format = "[⎈ $context(/$namespace)]($style) "
+
+[cmd_duration]
+min_time = 2000

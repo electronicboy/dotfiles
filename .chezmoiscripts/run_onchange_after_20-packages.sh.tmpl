@@ -1,0 +1,22 @@
+#!/bin/bash
+# Re-runs whenever the package lists or the mise config change.
+# packages:    {{ .packages | toJson | sha256sum }}
+# mise config: {{ include "dot_config/mise/config.toml.tmpl" | sha256sum }}
+set -euo pipefail
+
+log() { printf '\033[1;34m==>\033[0m %s\n' "$*"; }
+
+{{ if eq .pkgmgr "macports" -}}
+log "MacPorts: syncing and installing packages..."
+sudo /opt/local/bin/port -N selfupdate
+sudo /opt/local/bin/port -N install {{ .packages.macports | join " " }}
+{{- else if eq .pkgmgr "homebrew" }}
+log "Homebrew: installing packages..."
+/opt/homebrew/bin/brew install {{ .packages.homebrew | join " " }}
+{{- end }}
+
+MISE="$HOME/.local/bin/mise"
+command -v "$MISE" >/dev/null || MISE=mise
+log "mise: installing tools (first run takes a while: JDKs, Node, Go...)"
+"$MISE" trust --quiet "$HOME/.config/mise/config.toml" 2>/dev/null || true
+"$MISE" install --yes

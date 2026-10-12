@@ -1,0 +1,21 @@
+{{- /* Asked once on first `chezmoi init`, then remembered in ~/.config/chezmoi/chezmoi.toml */ -}}
+{{- $name  := promptStringOnce . "name"  "Git name" "Shane Freeder" -}}
+{{- $email := promptStringOnce . "email" "Git email" -}}
+
+{{- /* Which system package manager this machine uses */ -}}
+{{- $pkgmgr := "none" -}}
+{{- if eq .chezmoi.os "darwin" -}}
+{{-   if eq .chezmoi.arch "amd64" -}}
+{{-     $pkgmgr = "macports" -}}
+{{-   else -}}
+{{-     $pkgmgr = "homebrew" -}}
+{{-   end -}}
+{{- end -}}
+
+[data]
+    name = {{ $name | quote }}
+    email = {{ $email | quote }}
+    pkgmgr = {{ $pkgmgr | quote }}
+
+[diff]
+    exclude = ["scripts"]
