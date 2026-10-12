@@ -12,7 +12,7 @@
       "Unlimited Scrollback": true,
       "Silence Bell": true,
       "Columns": 120,
-      "Rows": 40,
+      "Rows": 25,
       "Custom Directory": "Recycle"
     }
   ]
